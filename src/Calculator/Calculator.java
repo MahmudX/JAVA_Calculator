@@ -210,36 +210,41 @@ public class Calculator {
         equalbtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Double t;
-                if (displayText.indexOf("+") != -1) {
-                    String[] s = displayText.toString().split("\\+");
-                    t = Double.parseDouble(s[0]) + Double.parseDouble(s[1]);
-                } else if (displayText.indexOf("-") != -1) {
-                    String[] s = displayText.toString().split("-");
-                    t = Double.parseDouble(s[0]) - Double.parseDouble(s[1]);
-                } else if (displayText.indexOf("/") != -1) {
-                    String[] s = displayText.toString().split("/");
-                    t = Double.parseDouble(s[0]) / Double.parseDouble(s[1]);
-                } else if (displayText.indexOf("%") != -1) {
-                    String[] s = displayText.toString().split("%");
-                    t = Double.parseDouble(s[0]) % Double.parseDouble(s[1]);
+                try {
+                    Double t;
+                    String[] s;
+                    if (displayText.indexOf("+") != -1) {
+                        s = displayText.toString().split("\\+");
+                        t = Double.parseDouble(s[0]) + Double.parseDouble(s[1]);
+                    } else if (displayText.indexOf("-") != -1) {
+                        s = displayText.toString().split("-");
+                        t = Double.parseDouble(s[0]) - Double.parseDouble(s[1]);
+                    } else if (displayText.indexOf("/") != -1) {
+                        s = displayText.toString().split("/");
+                        t = Double.parseDouble(s[0]) / Double.parseDouble(s[1]);
+                    } else if (displayText.indexOf("%") != -1) {
+                        s = displayText.toString().split("%");
+                        t = Double.parseDouble(s[0]) % Double.parseDouble(s[1]);
 
-                } else {
-                    String[] s = new String[10];
-                    try {
-                        s = displayText.toString().split("\\*");
-                    } catch (Exception ex) {
+                    } else if (displayText.indexOf("x") != -1) {
                         s = displayText.toString().split("x");
+                        t = Double.parseDouble(s[0]) * Double.parseDouble(s[1]);
+
+                    } else if (displayText.indexOf("*") != -1) {
+                        s = displayText.toString().split("\\*");
+                        t = Double.parseDouble(s[0]) * Double.parseDouble(s[1]);
+
+                    } else {
+                        t = Double.parseDouble(display.getText());
                     }
-                    t = Double.parseDouble(s[0]) * Double.parseDouble(s[1]);
+
+                    if (t % 1 == 0) {
+                        displayText = new StringBuilder(String.valueOf(t.intValue()));
+                    } else
+                        displayText = new StringBuilder(String.valueOf(t));
+                    display.setText(String.valueOf(displayText));
+                } catch (Exception exception) {
                 }
-                if (t%1==0)
-                {
-                    displayText = new StringBuilder(String.valueOf(t.intValue()));
-                }
-                else
-                    displayText = new StringBuilder(String.valueOf(t));
-                display.setText(String.valueOf(displayText));
             }
         });
     }
