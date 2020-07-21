@@ -30,52 +30,93 @@ public class Calculator {
     private JButton plusminsign;
     private JButton zerobtn;
     private JButton cbtn;
-    static  StringBuilder displayText = new StringBuilder();
+    static StringBuilder displayText = new StringBuilder();
+
     public Calculator() {
         this.display.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         dotbtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(displayText.indexOf(".") == -1) {
+                if (displayText.indexOf(".") == -1) {
                     displayText.append(".");
                     display.setText(String.valueOf(displayText));
                 }
             }
         });
-        zerobtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                displayText.append("0");
-                display.setText(String.valueOf(displayText));
-            }
-        });
         plusminsign.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (displayText.charAt(0) == '-')
-                {
+                if (displayText.charAt(0) == '-') {
                     displayText.deleteCharAt(0);
-                }
-                else {
-                    displayText.insert(0,'-');
+                } else {
+                    displayText.insert(0, '-');
                 }
                 display.setText(String.valueOf(displayText));
             }
         });
-        a1Button.addActionListener(new ActionListener() {
+        modbtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                displayText.append("1");
-                display.setText(String.valueOf(displayText));
+                if (displayText.indexOf("%") == -1 && displayText.indexOf("+") == -1 &&
+                        displayText.indexOf("-") == -1 && displayText.indexOf("x") == -1 &&
+                        displayText.indexOf("*") == -1 && displayText.indexOf("/") == -1) {
+                    displayText.append("%");
+                    display.setText(String.valueOf(displayText));
+                }
+            }
+        });
+        divbtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (displayText.indexOf("%") == -1 && displayText.indexOf("+") == -1 &&
+                        displayText.indexOf("-") == -1 && displayText.indexOf("x") == -1 &&
+                        displayText.indexOf("*") == -1 && displayText.indexOf("/") == -1) {
+                    displayText.append("/");
+                    display.setText(String.valueOf(displayText));
+                }
+            }
+        });
+        xButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (displayText.indexOf("%") == -1 && displayText.indexOf("+") == -1 &&
+                        displayText.indexOf("-") == -1 && displayText.indexOf("x") == -1 &&
+                        displayText.indexOf("*") == -1 && displayText.indexOf("/") == -1) {
+                    displayText.append("x");
+                    display.setText(String.valueOf(displayText));
+                }
+            }
+        });
+        subbtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (displayText.indexOf("%") == -1 && displayText.indexOf("+") == -1 &&
+                        displayText.indexOf("-") == -1 && displayText.indexOf("x") == -1 &&
+                        displayText.indexOf("*") == -1 && displayText.indexOf("/") == -1) {
+                    displayText.append("-");
+                    display.setText(String.valueOf(displayText));
+                }
+            }
+        });
+        addbtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (displayText.indexOf("%") == -1 && displayText.indexOf("+") == -1 &&
+                        displayText.indexOf("-") == -1 && displayText.indexOf("x") == -1 &&
+                        displayText.indexOf("*") == -1 && displayText.indexOf("/") == -1) {
+                    displayText.append("+");
+                    display.setText(String.valueOf(displayText));
+                }
             }
         });
         CEButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    displayText.deleteCharAt(displayText.length()-1);
+                    displayText.deleteCharAt(displayText.length() - 1);
                     display.setText(String.valueOf(displayText));
-                }catch (Exception exception){}
+                } catch (Exception exception) {
+                }
 
             }
         });
@@ -86,49 +127,18 @@ public class Calculator {
                 display.setText(String.valueOf(displayText));
             }
         });
-        modbtn.addActionListener(new ActionListener() {
+        zerobtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(displayText.indexOf("%") == -1) {
-                    displayText.append("%");
-                    display.setText(String.valueOf(displayText));
-                }
+                displayText.append("0");
+                display.setText(String.valueOf(displayText));
             }
         });
-        divbtn.addActionListener(new ActionListener() {
+        a1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(displayText.indexOf("/") == -1) {
-                    displayText.append("/");
-                    display.setText(String.valueOf(displayText));
-                }
-            }
-        });
-        xButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(displayText.indexOf("x") == -1) {
-                    displayText.append("x");
-                    display.setText(String.valueOf(displayText));
-                }
-            }
-        });
-        subbtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(displayText.indexOf("-") == -1) {
-                    displayText.append("-");
-                    display.setText(String.valueOf(displayText));
-                }
-            }
-        });
-        addbtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(displayText.indexOf("+") == -1) {
-                    displayText.append("+");
-                    display.setText(String.valueOf(displayText));
-                }
+                displayText.append("1");
+                display.setText(String.valueOf(displayText));
             }
         });
         a2Button.addActionListener(new ActionListener() {
@@ -191,8 +201,7 @@ public class Calculator {
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if (!((c >= '0' && c <='9') || c == '+' || c == '-' || c == 'x'||c == '*' || c == '/' || c == '%'))
-                {
+                if (!((c >= '0' && c <= '9') || c == '+' || c == '-' || c == 'x' || c == '*' || c == '/' || c == '%')) {
                     e.consume();
                 }
                 displayText = new StringBuilder(display.getText());
@@ -201,10 +210,40 @@ public class Calculator {
         equalbtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Double t;
+                if (displayText.indexOf("+") != -1) {
+                    String[] s = displayText.toString().split("\\+");
+                    t = Double.parseDouble(s[0]) + Double.parseDouble(s[1]);
+                } else if (displayText.indexOf("-") != -1) {
+                    String[] s = displayText.toString().split("-");
+                    t = Double.parseDouble(s[0]) - Double.parseDouble(s[1]);
+                } else if (displayText.indexOf("/") != -1) {
+                    String[] s = displayText.toString().split("/");
+                    t = Double.parseDouble(s[0]) / Double.parseDouble(s[1]);
+                } else if (displayText.indexOf("%") != -1) {
+                    String[] s = displayText.toString().split("%");
+                    t = Double.parseDouble(s[0]) % Double.parseDouble(s[1]);
 
+                } else {
+                    String[] s = new String[10];
+                    try {
+                        s = displayText.toString().split("\\*");
+                    } catch (Exception ex) {
+                        s = displayText.toString().split("x");
+                    }
+                    t = Double.parseDouble(s[0]) * Double.parseDouble(s[1]);
+                }
+                if (t%1==0)
+                {
+                    displayText = new StringBuilder(String.valueOf(t.intValue()));
+                }
+                else
+                    displayText = new StringBuilder(String.valueOf(t));
+                display.setText(String.valueOf(displayText));
             }
         });
     }
+
     public static void main(String[] args) {
         JFrame frame = new JFrame("Calculator");
         frame.setResizable(false);
