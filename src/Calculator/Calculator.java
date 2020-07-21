@@ -1,5 +1,8 @@
 package Calculator;
+import com.sun.source.tree.WhileLoopTree;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -211,8 +214,40 @@ public class Calculator {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    String DivMulPattern = "/([0-9]*\\.?[0-9]*)([\\*/])([0-9]*\\.?[0-9]*)/";
+                    String AddSubPattern = "/([0-9]*\\.?[0-9]*)([\\+\\-])([0-9]*\\.?[0-9]*)/";
+
                     Double t;
                     String[] s;
+                    try{
+                        Pattern r = Pattern.compile(DivMulPattern);
+                        Matcher m = r.matcher(display.getText());
+                        if (m.group(2) == "*" || m.group(2) == "x") {
+                            s = displayText.toString().split("\\*");
+                            t = Double.parseDouble(s[0]) * Double.parseDouble(s[1]);
+                        }
+                        else {
+                            s = displayText.toString().split("/");
+                            t = Double.parseDouble(s[0]) / Double.parseDouble(s[1]);
+                        }
+                    }
+                    catch (Exception exception){display.setText(exception.getMessage());}
+                    try{
+                        Pattern r = Pattern.compile(AddSubPattern);
+                        Matcher m = r.matcher(display.getText());
+                        if (m.group(2) == "+") {
+                            s = displayText.toString().split("\\*");
+                            t = Double.parseDouble(s[0]) + Double.parseDouble(s[1]);
+                        }
+                        else
+                        {
+                            s = displayText.toString().split("-");
+                            t = Double.parseDouble(s[0]) - Double.parseDouble(s[1]);
+                        }
+                    }
+                    catch (Exception exception){display.setText(exception.getMessage());}
+                    /*
+
                     if (displayText.indexOf("+") != -1) {
                         s = displayText.toString().split("\\+");
                         t = Double.parseDouble(s[0]) + Double.parseDouble(s[1]);
@@ -241,9 +276,10 @@ public class Calculator {
                     if (t % 1 == 0) {
                         displayText = new StringBuilder(String.valueOf(t.intValue()));
                     } else
-                        displayText = new StringBuilder(String.valueOf(t));
+                        displayText = new StringBuilder(String.valueOf(t));*/
                     display.setText(String.valueOf(displayText));
                 } catch (Exception exception) {
+                    display.setText(exception.getMessage());
                 }
             }
         });
