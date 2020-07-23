@@ -219,6 +219,7 @@ public class Calculator {
 
                     Double t;
                     String[] s;
+                    /*
                     try{
                         Pattern r = Pattern.compile(DivMulPattern);
                         Matcher m = r.matcher(display.getText());
@@ -246,7 +247,7 @@ public class Calculator {
                         }
                     }
                     catch (Exception exception){display.setText(exception.getMessage());}
-                    /*
+                    */
 
                     if (displayText.indexOf("+") != -1) {
                         s = displayText.toString().split("\\+");
@@ -276,7 +277,7 @@ public class Calculator {
                     if (t % 1 == 0) {
                         displayText = new StringBuilder(String.valueOf(t.intValue()));
                     } else
-                        displayText = new StringBuilder(String.valueOf(t));*/
+                        displayText = new StringBuilder(String.valueOf(t));
                     display.setText(String.valueOf(displayText));
                 } catch (Exception exception) {
                     display.setText(exception.getMessage());
