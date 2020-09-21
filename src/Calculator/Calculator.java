@@ -2,8 +2,12 @@ package Calculator;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.math.BigInteger;
+import java.util.Collections;
 
 public class Calculator {
     private JPanel mainForm;
@@ -13,12 +17,7 @@ public class Calculator {
     private JButton addBtn, equalBtn, a3Button;
     private JButton dotBtn, a2Button, a1Button, plusMinSign;
     private JButton zeroBtn, cBtn, openingParenthesis, closingParenthesis;
-    private JButton nButton;
-    private JButton expButton;
-    private JButton xYButton;
-    private JButton logButton;
-    private JButton lnButton;
-    private JButton button4;
+    private JButton nButton, expButton, xYButton, logButton, lnButton, button4;
     static StringBuilder displayText = new StringBuilder();
     Stack<String> bracketStack = new Stack<String>();
 
@@ -74,6 +73,7 @@ public class Calculator {
         a7Button.addActionListener(e -> changeDisplay("7"));
         a8Button.addActionListener(e -> changeDisplay("9"));
         a9Button.addActionListener(e -> changeDisplay("9"));
+        xYButton.addActionListener(e -> changeDisplay("^"));
         openingParenthesis.addActionListener(e -> {
             if (displayText.length() == 0 || displayText.charAt(displayText.length() - 1) != ')') {
                 bracketStack.push("(");
@@ -86,7 +86,14 @@ public class Calculator {
                 changeDisplay(")");
             }
         });
-
+        // Factorial Operation
+        nButton.addActionListener(e -> {
+            try {
+                display.setText(String.valueOf(factorial(Integer.parseInt(displayText.toString()))));
+                displayText.setLength(0);
+            } catch (Exception ignored) {
+            }
+        });
         // Keyboard Input Handling
         display.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
@@ -101,11 +108,20 @@ public class Calculator {
         // Result Button
         equalBtn.addActionListener(e -> {
             try {
-                if (displayText.charAt(0) != '(')
-                    displayText.insert(0, '(');
-                if (displayText.charAt(displayText.length() - 1) != ')')
-                    displayText.append(")");
-                double res = calculator((displayText.toString()).split(""));
+                double res;
+                if (isContain("^")) {
+                    System.out.println(displayText.toString());
+                    String[] t = displayText.toString().split("\\^");
+                    System.out.println(t[0]);
+                    System.out.println(t[1]);
+                    res = Math.pow(Double.parseDouble(t[0]),Double.parseDouble(t[1]));
+                } else {
+                    if (displayText.charAt(0) != '(')
+                        displayText.insert(0, '(');
+                    if (displayText.charAt(displayText.length() - 1) != ')')
+                        displayText.append(")");
+                    res = calculator((displayText.toString()).split(""));
+                }
                 displayText.setLength(0);
                 if (res % 1 == 0)
                     displayText.append((int) res);
@@ -116,12 +132,29 @@ public class Calculator {
             } catch (Exception ignored) {
             }
         });
+
+
+    }
+
+    // Contains any
+    private boolean isContain(String ch) {
+        return displayText.toString().contains(ch);
     }
 
     // Display changing function
     private void changeDisplay(String ch) {
         displayText.append(ch);
         display.setText(String.valueOf(displayText));
+    }
+
+    // Factorial Engine
+    public BigInteger factorial(int n) {
+        BigInteger result = BigInteger.ONE;
+        for (int i = 2; i <= n; i++) {
+            System.out.println(result);
+            result = result.multiply(BigInteger.valueOf(i));
+        }
+        return result;
     }
 
     // Calculator Engine
