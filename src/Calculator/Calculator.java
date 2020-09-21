@@ -13,6 +13,12 @@ public class Calculator {
     private JButton addBtn, equalBtn, a3Button;
     private JButton dotBtn, a2Button, a1Button, plusMinSign;
     private JButton zeroBtn, cBtn, openingParenthesis, closingParenthesis;
+    private JButton nButton;
+    private JButton expButton;
+    private JButton xYButton;
+    private JButton logButton;
+    private JButton lnButton;
+    private JButton button4;
     static StringBuilder displayText = new StringBuilder();
     Stack<String> bracketStack = new Stack<String>();
 
