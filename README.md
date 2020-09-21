@@ -10,4 +10,9 @@ This calculator can perform multiple operation at a time. Since it's a starter a
 
 **There is some bug.** Scheduled for fixing.
 
+
+## UI Screenshot
+![Calculator SS](https://github.com/MahmudX/JAVA_Calculator/blob/master/src/updatedCalc.png?raw=true)
+
+#### Old UI
 ![Calculator SS](https://github.com/MahmudX/JAVA_Calculator/blob/master/src/Screenshot_6.png?raw=true)
